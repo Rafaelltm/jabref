@@ -1,6 +1,7 @@
 package org.jabref.model.entry;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.YearMonth;
 import java.util.Optional;
@@ -15,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class DateTest {
+
+    public final Date date = new Date(2022, 03, 17);
 
     @Test
     void parseCorrectlyYearRangeDate() throws Exception {
@@ -49,6 +52,53 @@ class DateTest {
     @Test
     void parseDateNull() {
         assertThrows(NullPointerException.class, () -> Date.parse(null));
+    }
+
+    @Test
+    void testEquals1() throws Exception {
+        assertEquals(false, date.equals(new Date(2020, 1, 21)));
+    }
+
+    @Test
+    void testEquals2() throws Exception {
+        assertEquals(true, date.equals(date));
+    }
+
+    @Test
+    void testEquals3() throws Exception {
+        assertEquals(false, date.equals(null));
+    }
+
+    @Test
+    void testEquals4() throws Exception {
+        assertEquals(false, date.equals(new Date(2020, 02, 02)));
+    }
+
+    @Test
+    void testEquals5() throws Exception {
+        Date date = new Date(2021, 03, 17);
+        assertEquals(false, date.equals(LocalDateTime.now()));
+    }
+
+    @Test
+    void testEquals6() throws Exception {
+        assertEquals(false, date.equals(new Date(2022, 03, 16)));
+    }
+
+    @Test
+    void testEquals7() throws Exception {
+        assertEquals(false, date.equals(new Date(2022, 04, 17)));
+    }
+
+    @Test
+    void testEquals8() throws Exception {
+        assertEquals(false, date.equals(new Date(2021, 03, 17)));
+    }
+
+    @Test
+    void testEquals9() throws Exception {
+        Object date2 = LocalDate.of(2022, 03, 17);
+        assertEquals(false, date.equals(date2));
     }
 
     @ParameterizedTest
